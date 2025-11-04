@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimony</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/natures heart favicon.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <!-- Logo and Navigation -->
+            <nav class="navbar">
+              <!-- logo -->
+              <div class="navbar-container">
+              <a  href="index.html"><img class="logo" src="./images/Nature's heart logo.svg" alt="natures heart logo"></a>
+              <!-- Hamburger -->
+              <button class="navbar-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+              </button>
+              <!-- nav links -->
+              <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="teams.html">Teams</a></li>
+                <li><a href="thematics.html">Thematics</a></li>
+                <li><a href="Impacts.html">Impacts</a></li>
+                <li><a href="testimony.html">Testimony</a></li>
+                <li><a href="contact.html">Contact</a></li>
+              </ul>
+            </div>
+            </nav>
+          <!-- Hero -->
+          <div class="hero">
+            <div class="hero_details">
+              <h1>Testimony</h1>
+            </div>
+          </div>
+        </header>
+        <main>
+            <!-- Testimonies -->
+        <section id="testimonies" class="testimonies">
+            <h1>Testimony</h1>
+            <div class="testimon">
+              <div class="Testimony1">
+                <p>
+                 “TechHer changed my life. I learned computer skills, online safety, and how to design. I want to study Computer Science now.”
+                </p>
+                <small>— Amina, Student, GGSS Makera</small>
+              </div>
+              <div class="Testimony2">
+                <p>
+                  “Bleed with Pride helped me understand menstrual hygiene and how to care for myself confidently.”
+                </p>
+                <small>— Zainab, Participant</small>
+              </div>
+              <div class="Testimony3">
+                <p>
+                  “The maternal health project made me feel supported and prepared for childbirth.”
+                </p>
+                <small>— Maryam, Expectant Mother, Ungwan Muazu PHC</small>
+              </div>
+            </div>
+          </section>
+        </main>
+    <!-- Footer -->
+    <footer>
+        <div id="contact" class="contact">
+          <p><b>Email:</b> naturesheartfoundation@gmail.com</p>
+          <p><b>Phone:</b> 09122736021</p>
+          <p><b>Address:</b> Kaduna, Nigeria</p>
+        </div>
+        <!-- Social Links -->
+        <div class="social">
+          <a href="https://www.facebook.com/share/17mX6MbzPf/"
+          target="_blank"><img src="./images/icon-facebook.svg" alt="icon-facebook"
+          /></a>
+          <a href="https://x.com/Natures_heart_?t=p1eJa7MGD9TSo6wg8exWLQ&s=09"
+          target="_blank"><img src="./images/icon-twitter.svg" alt="icon-twitter"
+          /></a>
+          <a href="https://www.instagram.com/nature_heart_foundation_?igsh=NzE2dTBrOGE2d2Js"
+          target="_blank"><img src="./images/icon-instagram.svg" alt="icon-instagram"
+          /></a>
+        </div>
+        <p class="copy">&copy; Nature's Heart Foundation. All Right Reserved</p>
+      </footer>
+    </div>
+    <!-- JavaScript -->
+     <script>
+     const navbarToggle = document.querySelector('.navbar-toggle')
+     const navbarMenu = document.querySelector('.navbar-menu')
+     navbarToggle.addEventListener('click', () => {
+      navbarToggle.classList.toggle('active')
+      navbarMenu.classList.toggle('active')
+     })
+     document.querySelector('.navbar-menu').forEach(link => {
+      link.addEventListener('click', () => {
+        navbarToggle.classList.remove('active');
+        navbarMenu.classList.remove('active');
+      });
+     });
+     </script>
+</body>
+</html>
