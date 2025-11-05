@@ -24,7 +24,7 @@
               <div class="navbar-container">
               <a  href="index.html"><img class="logo" src="./images/Nature's heart logo.svg" alt="natures heart logo"></a>
               <!-- Hamburger -->
-              <button class="navbar-toggle">
+              <button class="navbar-toggle" aria-label="Toggle navigation" aria-expanded="false">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -108,23 +108,27 @@
         target="_blank"><img src="./images/icon-instagram.svg" alt="icon-instagram"
         /></a>
       </div>
-      <p class="copy">&copy; Nature's Heart Foundation. All Right Reserved</p>
+      <p class="copy">&copy; Nature's Heart Foundation. All Rights Reserved</p>
     </footer>
   </div>
   <!-- JavaScript -->
    <script>
-   const navbarToggle = document.querySelector('.navbar-toggle')
-   const navbarMenu = document.querySelector('.navbar-menu')
-   navbarToggle.addEventListener('click', () => {
-    navbarToggle.classList.toggle('active')
-    navbarMenu.classList.toggle('active')
-   })
-   document.querySelector('.navbar-menu').forEach(link => {
-    link.addEventListener('click', () => {
-      navbarToggle.classList.remove('active');
-      navbarMenu.classList.remove('active');
-    });
-   });
+   const navbarToggle = document.querySelector('.navbar-toggle');
+   const navbarMenu = document.querySelector('.navbar-menu');
+   if (navbarToggle && navbarMenu) {
+     navbarToggle.addEventListener('click', () => {
+       const isActive = navbarToggle.classList.toggle('active');
+       navbarMenu.classList.toggle('active');
+       navbarToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+     });
+     document.querySelectorAll('.navbar-menu a').forEach((link) => {
+       link.addEventListener('click', () => {
+         navbarToggle.classList.remove('active');
+         navbarMenu.classList.remove('active');
+         navbarToggle.setAttribute('aria-expanded', 'false');
+       });
+     });
+   }
    </script>
 </body>
 </html>
