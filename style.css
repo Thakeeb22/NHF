@@ -491,7 +491,7 @@ footer {
 @media (max-width: 800px) {
   .navbar {
     backdrop-filter: none;
-    height: 40px;
+    height: 56px;
   }
   .navbar-container .navbar-menu {
     display: none;
@@ -523,6 +523,11 @@ footer {
   }
   .navbar-toggle.active .bar:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
+  }
+  /* Ensure logo scales to fit the shorter header */
+  .logo {
+    max-height: 36px;
+    width: auto;
   }
   .thematics_cont {
     grid-template-columns: auto;
