@@ -39,9 +39,9 @@ header {
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: #0288d1;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
+  background-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
   z-index: 999;
   padding: 10px;
 }
@@ -66,7 +66,7 @@ header {
 }
 .navbar-container .navbar-menu li a {
   text-decoration: none;
-  color: #fff;
+  color: #000;
   font-size: 15px;
   font-weight: 500;
   padding: 3px 10px;
@@ -90,7 +90,7 @@ header {
   width: 25px;
   height: 3px;
   margin: 5px auto;
-  background: #fff;
+  background: #000;
   transition: all 0.3s ease-in-out;
 }
 /* Hero */
@@ -100,11 +100,21 @@ header {
   align-items: center;
   flex: 1 1 0;
   grid-area: hero;
-  margin-top: 50px;
+  margin-top: 0;
   height: 100vh;
-  background: url(./images/REPORT\ TECH\ HER\ WEMA.jpg);
-  background-position: center;
-  background-size: cover;
+  background: linear-gradient(120deg, #0288d1, #4dd0e1, #a8d5ba, #d8f1e2);
+  background-size: 300% 300%;
+  animation: heroGradient 12s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+@keyframes heroGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero { animation: none; }
 }
 .hero_details {
   background-color: rgba(0, 0, 0, 0.6);
@@ -118,6 +128,55 @@ header {
   align-items: center;
   justify-content: center;
   color: white;
+  z-index: 2;
+}
+/* Floating dancing shapes */
+.shapes {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.shapes span {
+  position: absolute;
+  display: block;
+  opacity: 0.25;
+  filter: blur(0.3px);
+  animation: floatWide 28s linear infinite;
+}
+.shape-circle { border-radius: 50%; }
+.shape-square { border-radius: 10px; }
+.shape-triangle { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
+
+/* Individual sizes/positions */
+.shapes .s1 { width: 90px; height: 90px; left: 8%; top: 20%; background: #ffffff; animation-duration: 16s; animation-delay: -2s; }
+.shapes .s2 { width: 120px; height: 120px; left: 70%; top: 30%; background: #4dd0e1; animation-duration: 18s; animation-delay: -6s; }
+.shapes .s3 { width: 70px; height: 70px; left: 20%; top: 65%; background: #a8d5ba; animation-duration: 14s; animation-delay: -4s; }
+.shapes .s4 { width: 140px; height: 140px; left: 45%; top: 10%; background: #0288d1; animation-duration: 20s; animation-delay: -8s; }
+.shapes .s5 { width: 80px; height: 80px; left: 82%; top: 68%; background: #ffffff; animation-duration: 17s; animation-delay: -10s; }
+.shapes .s6 { width: 60px; height: 60px; left: 5%; top: 80%; background: #4dd0e1; animation-duration: 13s; animation-delay: -12s; }
+
+@keyframes floatWide {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  20%  { transform: translate3d(30vw, -10vh, 0) rotate(45deg); }
+  40%  { transform: translate3d(-25vw, 15vh, 0) rotate(90deg); }
+  60%  { transform: translate3d(15vw, 20vh, 0) rotate(135deg); }
+  80%  { transform: translate3d(-10vw, -20vh, 0) rotate(180deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(225deg); }
+}
+
+@media (max-width: 800px) {
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .metric { width: 160px; }
+  .shapes .s1 { width: 60px; height: 60px; }
+  .shapes .s2 { width: 80px; height: 80px; }
+  .shapes .s4 { width: 100px; height: 100px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shapes span { animation: none; }
 }
 .hero_details > h1 {
   font-size: 40px;
@@ -234,6 +293,35 @@ section {
   margin: 10px;
   margin-top: 40px;
 }
+/* Impact section links */
+.our_impacts a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: none;
+  padding-bottom: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.our_impacts a::after {
+  content: '→';
+  display: inline-block;
+  transform: translateX(0);
+  transition: transform 0.25s ease;
+}
+.our_impacts a:hover {
+  opacity: 0.9;
+}
+.our_impacts a:hover::after {
+  transform: translateX(4px);
+}
+.our_impacts a:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+  border-bottom-color: transparent;
+}
 .project1 {
   padding: 30px;
   background: linear-gradient(45deg, #c62828, #ee6a6a);
@@ -335,6 +423,70 @@ section {
   object-fit: contain;
 }
 /* testimonies */
+.metrics {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: #ffffff;
+}
+.metrics-grid {
+  margin-top: 10px;
+  width: 100%;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  place-items: center;
+}
+.metric {
+  position: relative;
+  width: 220px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background: radial-gradient(circle at 50% 40%, #ffffff 0%, #f5fbff 60%, #eaf6fb 100%);
+  box-shadow: 0 6px 20px rgba(2, 136, 209, 0.08);
+  overflow: hidden;
+}
+.metric::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #0288d1, #4dd0e1, #a8d5ba, #0288d1);
+  animation: spinRing 12s linear infinite;
+  z-index: 0;
+}
+.metric::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: inherit;
+  z-index: 1;
+}
+.metric-number,
+.metric-label { z-index: 2; }
+.metric-number {
+  font-size: 42px;
+  font-weight: 800;
+  color: #0288d1;
+  line-height: 1;
+}
+.metric-label {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #333333;
+}
+@keyframes spinRing {
+  to { transform: rotate(360deg); }
+}
 .testimonies {
   grid-area: testimonies;
   display: flex;
@@ -585,4 +737,8 @@ footer {
     grid-template-columns: 1fr;
     width: 100%;
   }
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  .metric { width: 140px; }
 }

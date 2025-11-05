@@ -44,6 +44,14 @@
           </nav>
         <!-- Hero -->
         <div class="hero">
+          <div class="shapes" aria-hidden="true">
+            <span class="shape-circle s1"></span>
+            <span class="shape-square s2"></span>
+            <span class="shape-triangle s3"></span>
+            <span class="shape-circle s4"></span>
+            <span class="shape-square s5"></span>
+            <span class="shape-triangle s6"></span>
+          </div>
           <div class="hero_details">
             <h1>(NHF-ADEI)</h1>
             <p>
@@ -239,6 +247,23 @@
             Goal: Build healthier, informed, and socially responsible youth.
             </p>
             <a href="#">Click here to Read More...</a>
+          </div>
+          <!-- Impact Metrics inside Our Impacts -->
+          <div class="metrics">
+            <div class="metrics-grid">
+              <div class="metric">
+                <div class="metric-number" data-target="1000">0</div>
+                <div class="metric-label">Beneficiaries</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number" data-target="25">0</div>
+                <div class="metric-label">Communities Reached</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number" data-target="12">0</div>
+                <div class="metric-label">Projects Delivered</div>
+              </div>
+            </div>
           </div>
         </section>
         <!-- Partners -->
@@ -442,6 +467,35 @@
         // Initialize
         updateTestimonPosition();
         startTestimonAutoSlide();
+      }
+
+      // Impact metrics count-up on view
+      const metricNumbers = document.querySelectorAll('.metric-number');
+      if (metricNumbers.length > 0) {
+        const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+        const animateValue = (el, to, duration = 1500) => {
+          const start = 0;
+          const startTime = performance.now();
+          const format = (v) => Math.floor(v).toLocaleString();
+          const step = (now) => {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const eased = easeOut(progress);
+            el.textContent = format(start + (to - start) * eased);
+            if (progress < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        };
+        const io = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const el = entry.target;
+              const target = parseInt(el.getAttribute('data-target') || '0', 10);
+              animateValue(el, target);
+              obs.unobserve(el);
+            }
+          });
+        }, { threshold: 0.4 });
+        metricNumbers.forEach((el) => io.observe(el));
       }
      </script>
   </body>
