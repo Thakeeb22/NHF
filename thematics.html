@@ -132,6 +132,7 @@
         </div>
         <p class="copy">&copy; Nature's Heart Foundation. All Rights Reserved</p>
       </footer>
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
     </div>
     <!-- JavaScript -->
      <script>
@@ -147,6 +148,18 @@
         navbarMenu.classList.remove('active');
       });
      });
+     // Back to top (mobile)
+     const backToTopBtn = document.getElementById('backToTop');
+     const toggleBackToTop = () => {
+       if (!backToTopBtn) return;
+       if (window.scrollY > 300) backToTopBtn.classList.add('visible');
+       else backToTopBtn.classList.remove('visible');
+     };
+     window.addEventListener('scroll', toggleBackToTop);
+     backToTopBtn?.addEventListener('click', () => {
+       window.scrollTo({ top: 0, behavior: 'smooth' });
+     });
+     toggleBackToTop();
      </script>
 </body>
 </html>

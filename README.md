@@ -1,19 +1,29 @@
-# Nature's Heart Foundation (NHF-ADEI)
+# Nature's Heart Foundation (NHF-ADEI) Website
 
-A simple, responsive, static website for Nature’s Heart Foundation – Action for Development and Empowerment Initiatives (NHF-ADEI). It showcases the organization’s mission, thematics, projects/impacts, partners, testimonials, and team.
+A modern, responsive, static website for Nature’s Heart Foundation – Action for Development and Empowerment Initiatives (NHF-ADEI). It presents the organization’s mission, thematics, projects/impacts, partners, testimonials, team, and contact.
 
-## Features
-- Responsive layout with a fixed, mobile-friendly navigation (hamburger menu)
-- Smooth in-page scrolling to sections
-- Thematic sections highlighting focus areas
-- Project/Impact highlights
-- Partner logos and testimonials
-- Contact call-to-action form
+## Highlights
+- Transparent, fixed navbar with mobile hamburger menu
+- Animated hero section with floating shapes and accessible reduced‑motion support
+- Thematics grid and detailed Our Impacts cards with styled links
+- Testimonials carousel with autoplay, arrows, dots, swipe and pause‑on‑hover
+- Partners grid with uniform, even-sized logo cards across breakpoints
+- Circular Impact Metrics with animated ring and count‑up on scroll
+- Contact CTA form with accessible labels
 
 ## Tech Stack
 - HTML5
 - CSS3 (custom, no framework)
-- Vanilla JavaScript (for mobile nav toggle)
+- Vanilla JavaScript (nav toggle, carousel, counters)
+
+## Pages
+- `index.html` – Home (hero, about, thematics, our impacts + metrics, partners, testimonials, CTA)
+- `about-us.html` – About
+- `thematics.html` – Thematic focus areas
+- `Impacts.html` – Projects and impacts (also includes metrics)
+- `teams.html` – Teams
+- `testimony.html` – Testimonies
+- `contact.html` – Contact
 
 ## Project Structure
 ```
@@ -30,63 +40,69 @@ Natures heart foundation/
   │   ├── REPORT TECH HER WEMA.jpg
   │   ├── REPORT TECH HER WEMA.pdf
   │   └── skb logo.png
-  ├── index.html       # Landing page
-  ├── teams.html       # Teams page
-  └── style.css        # Global styles
+  ├── index.html
+  ├── about-us.html
+  ├── thematics.html
+  ├── Impacts.html
+  ├── teams.html
+  ├── testimony.html
+  ├── contact.html
+  └── style.css
 ```
 
 ## Getting Started
-Because this is a static site, you can open it directly in a browser.
+This is a static site—open `index.html` in a browser or serve locally for best results.
 
-- Option 1: Double-click `index.html` to open it in your default browser.
-- Option 2: Serve locally (recommended for correct asset paths and future growth):
-  - With VS Code: use the Live Server extension to “Open with Live Server”.
-  - With Node.js installed:
+- Quick open: double‑click `index.html`.
+- Local server (recommended):
+  - VS Code: “Open with Live Server”.
+  - Terminal:
     ```bash
     npx serve .
     # or
     python -m http.server 8080
+    # then visit http://localhost:8080/index.html
     ```
-    Then visit `http://localhost:8080/index.html`.
 
-## Editing
-- Global styles live in `style.css`.
-- The home page content is in `index.html`.
-- Team entries are in `teams.html`.
-- Mobile nav behavior is an inline script at the bottom of each HTML file.
+## Editing & Customization
+- Global styles: `style.css`
+  - Colors: navbar/link/brand blues are around `#0288d1` and `#4dd0e1`.
+  - Hero: animated gradient + floating shapes (`.hero`, `.shapes`).
+  - Testimonials: `.testimon-viewport`, `.testimon-track`, `.testimon-card`, arrows/dots.
+  - Metrics: `.metrics`, `.metrics-grid`, `.metric`, `.metric-number`.
+- Scripts: Inline at the bottom of each HTML file.
+  - Nav toggle (aria-expanded), closing on link click
+  - Testimonials auto‑slide + arrows + dots + swipe
+  - Impact metrics count‑up on scroll (IntersectionObserver)
+- Update metrics values via `data-target` attributes in `index.html`/`Impacts.html`.
 
-## Accessibility & SEO Notes
-- Use one `<h1>` per page; use `h2` for section titles.
-- Ensure all images have meaningful `alt` attributes.
-- Keep color contrast sufficient for readability.
-- Add/maintain `<meta name="description" content="..." />` for each page.
-- Ensure form labels are explicitly associated with inputs via matching `for`/`id`.
+## Accessibility & SEO
+- One `<h1>` per page; use `<h2>` for sections
+- Descriptive `alt` text for images
+- Label/`for` pairs and matching `id`s for form inputs
+- Respect user motion preference (reduced‑motion disables nonessential animations)
+- Add `<meta name="description" ...>` to each page as needed
 
 ## Performance Tips
-- Optimize large images (use WebP/AVIF with fallbacks).
-- Add intrinsic dimensions (or CSS `aspect-ratio`) to images to reduce layout shift.
-- Consider `loading="lazy"` on non-critical images (e.g., partners, team photos).
-- Minify CSS for production if needed.
+- Compress images (prefer WebP/AVIF with fallbacks) and keep logos optimized
+- Add intrinsic image sizes or use `object-fit`/`max-height` for stability
+- Consider lazy‑loading non-critical images
 
-## Known Improvements/Todos
-- Move any `<ul>` lists out of surrounding `<p>` tags in `index.html` to ensure valid HTML.
-- Use absolute URLs with protocol for social links (e.g., `https://facebook.com/...`) and consider `rel="noopener noreferrer"`.
-- Convert the hero background image to a compressed modern format.
-- On `teams.html`, use `document.querySelectorAll` when attaching click handlers to multiple links.
-- Add a real form handler (`action`/`method`) or client-side submission logic.
+## Deployment
+- GitHub Pages: push to a `main`/`master` branch and enable Pages in repo settings.
+- Netlify: drag‑and‑drop the folder or connect the repo (build not required for static).
+- Vercel: “Import Project” and deploy as a static site.
 
 ## Contributing
-1. Create a new branch for your change.
-2. Make edits to `index.html`, `teams.html`, and/or `style.css`.
-3. Test on mobile and desktop viewports.
-4. Open a pull request describing your changes.
+1. Create a feature branch
+2. Edit the relevant HTML/CSS files
+3. Test on mobile and desktop
+4. Open a pull request describing changes
 
 ## License
-This project is provided as-is for NHF-ADEI. If you need a formal OSS license, add one (e.g., MIT) to this repository.
+Provided as‑is for NHF‑ADEI. Add a license (e.g., MIT) if you need an explicit OSS license.
 
 ## Contact
-- Email: replace `exampl@gmail.com` in the footer with the official address.
-- Phone/Address: update in `index.html` and `teams.html` as needed.
-
-
-
+- Email: naturesheartfoundation@gmail.com
+- Phone: 09122736021
+- Address: Kaduna, Nigeria

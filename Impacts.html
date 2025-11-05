@@ -191,6 +191,7 @@
         </div>
         <p class="copy">&copy; Nature's Heart Foundation. All Rights Reserved</p>
       </footer>
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
     </div>
     <!-- JavaScript -->
      <script>
@@ -207,11 +208,13 @@
       });
      });
 
-     // Impact metrics count-up on view
+     // Impact metrics count-up on each view
      const metricNumbers = document.querySelectorAll('.metric-number');
      if (metricNumbers.length > 0) {
        const easeOut = (t) => 1 - Math.pow(1 - t, 3);
        const animateValue = (el, to, duration = 1500) => {
+         if (el.dataset.animating === 'true') return;
+         el.dataset.animating = 'true';
          const start = 0;
          const startTime = performance.now();
          const format = (v) => Math.floor(v).toLocaleString();
@@ -220,21 +223,35 @@
            const eased = easeOut(progress);
            el.textContent = format(start + (to - start) * eased);
            if (progress < 1) requestAnimationFrame(step);
+           else el.dataset.animating = 'false';
          };
+         el.textContent = '0';
          requestAnimationFrame(step);
        };
-       const io = new IntersectionObserver((entries, obs) => {
+       const io = new IntersectionObserver((entries) => {
          entries.forEach((entry) => {
+           const el = entry.target;
+           const target = parseInt(el.getAttribute('data-target') || '0', 10);
            if (entry.isIntersecting) {
-             const el = entry.target;
-             const target = parseInt(el.getAttribute('data-target') || '0', 10);
              animateValue(el, target);
-             obs.unobserve(el);
            }
          });
-       }, { threshold: 0.4 });
+       }, { threshold: 0.6 });
        metricNumbers.forEach((el) => io.observe(el));
      }
+
+     // Back to top (mobile)
+     const backToTopBtn = document.getElementById('backToTop');
+     const toggleBackToTop = () => {
+       if (!backToTopBtn) return;
+       if (window.scrollY > 300) backToTopBtn.classList.add('visible');
+       else backToTopBtn.classList.remove('visible');
+     };
+     window.addEventListener('scroll', toggleBackToTop);
+     backToTopBtn?.addEventListener('click', () => {
+       window.scrollTo({ top: 0, behavior: 'smooth' });
+     });
+     toggleBackToTop();
      </script>
 </body>
 </html>
