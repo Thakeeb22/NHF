@@ -6,6 +6,7 @@ body {
   margin: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  background-color: #f4f4f4;
 }
 .container {
   display: grid;
@@ -16,8 +17,7 @@ body {
     "main main main main"
     "footer footer footer footer";
   gap: 50px;
-  width: 100%;
-  background-color: #f4f4f4;
+  width: 100vw;
 }
 /* Header */
 header {
