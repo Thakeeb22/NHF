@@ -59,28 +59,33 @@
         <main>
             <!-- Testimonies -->
         <section id="testimonies" class="testimonies">
-            <h1>Testimony</h1>
-            <div class="testimon">
-              <div class="Testimony1">
+          <h1>Testimony</h1>
+          <div class="testimon-viewport">
+            <div class="testimon-track">
+              <div class="testimon-card">
                 <p>
-                 “TechHer changed my life. I learned computer skills, online safety, and how to design. I want to study Computer Science now.”
+                  “TechHer changed my life. I learned computer skills, online safety, and how to design. I want to study Computer Science now.”
                 </p>
                 <small>— Amina, Student, GGSS Makera</small>
               </div>
-              <div class="Testimony2">
+              <div class="testimon-card">
                 <p>
                   “Bleed with Pride helped me understand menstrual hygiene and how to care for myself confidently.”
                 </p>
                 <small>— Zainab, Participant</small>
               </div>
-              <div class="Testimony3">
+              <div class="testimon-card">
                 <p>
                   “The maternal health project made me feel supported and prepared for childbirth.”
                 </p>
                 <small>— Maryam, Expectant Mother, Ungwan Muazu PHC</small>
               </div>
             </div>
-          </section>
+            <button class="testimon-arrow prev" aria-label="Previous testimonial">&#10094;</button>
+            <button class="testimon-arrow next" aria-label="Next testimonial">&#10095;</button>
+          </div>
+          <div class="testimon-dots" aria-label="Testimonial pagination"></div>
+        </section>
         </main>
     <!-- Footer -->
     <footer>
@@ -107,30 +112,161 @@
     </div>
     <!-- JavaScript -->
      <script>
-     const navbarToggle = document.querySelector('.navbar-toggle')
-     const navbarMenu = document.querySelector('.navbar-menu')
-     navbarToggle.addEventListener('click', () => {
-      navbarToggle.classList.toggle('active')
-      navbarMenu.classList.toggle('active')
-     })
-     document.querySelector('.navbar-menu').forEach(link => {
-      link.addEventListener('click', () => {
-        navbarToggle.classList.remove('active');
-        navbarMenu.classList.remove('active');
+     const navbarToggle = document.querySelector('.navbar-toggle');
+     const navbarMenu = document.querySelector('.navbar-menu');
+     if (navbarToggle && navbarMenu) {
+       navbarToggle.addEventListener('click', () => {
+         const isActive = navbarToggle.classList.toggle('active');
+         navbarMenu.classList.toggle('active');
+         navbarToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+       });
+       document.querySelectorAll('.navbar-menu a').forEach((link) => {
+         link.addEventListener('click', () => {
+           navbarToggle.classList.remove('active');
+           navbarMenu.classList.remove('active');
+           navbarToggle.setAttribute('aria-expanded', 'false');
+         });
+       });
+     }
+
+      // Testimonials slider
+      const testimonViewport = document.querySelector('.testimon-viewport');
+      const testimonTrack = document.querySelector('.testimon-track');
+      const testimonCards = document.querySelectorAll('.testimon-card');
+      const prevBtn = document.querySelector('.testimon-arrow.prev');
+      const nextBtn = document.querySelector('.testimon-arrow.next');
+      const dotsContainer = document.querySelector('.testimon-dots');
+      let currentTestimonIndex = 0;
+      let testimonIntervalId;
+
+      function updateTestimonPosition() {
+        const offset = -currentTestimonIndex * testimonViewport.clientWidth;
+        testimonTrack.style.transform = `translateX(${offset}px)`;
+      }
+
+      function updateActiveDot() {
+        if (!dotsContainer) return;
+        const dots = dotsContainer.querySelectorAll('.testimon-dot');
+        dots.forEach((d, i) => {
+          if (i === currentTestimonIndex) d.classList.add('active');
+          else d.classList.remove('active');
+        });
+      }
+
+      function goToTestimon(index) {
+        currentTestimonIndex = (index + testimonCards.length) % testimonCards.length;
+        updateTestimonPosition();
+        updateActiveDot();
+      }
+
+      function startTestimonAutoSlide() {
+        stopTestimonAutoSlide();
+        testimonIntervalId = setInterval(() => {
+          goToTestimon(currentTestimonIndex + 1);
+        }, 4000);
+      }
+
+      function stopTestimonAutoSlide() {
+        if (testimonIntervalId) clearInterval(testimonIntervalId);
+      }
+
+      if (testimonViewport && testimonTrack && testimonCards.length > 0) {
+        // Create dots
+        if (dotsContainer) {
+          dotsContainer.innerHTML = '';
+          for (let i = 0; i < testimonCards.length; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'testimon-dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', `Go to testimonial ${i + 1}`);
+            dot.addEventListener('click', () => {
+              goToTestimon(i);
+            });
+            dotsContainer.appendChild(dot);
+          }
+        }
+        // Arrows
+        if (prevBtn) prevBtn.addEventListener('click', () => goToTestimon(currentTestimonIndex - 1));
+        if (nextBtn) nextBtn.addEventListener('click', () => goToTestimon(currentTestimonIndex + 1));
+
+        // Handle resize to keep slide width accurate
+        window.addEventListener('resize', updateTestimonPosition);
+        // Pause on hover for accessibility/UX
+        testimonViewport.addEventListener('mouseenter', stopTestimonAutoSlide);
+        testimonViewport.addEventListener('mouseleave', startTestimonAutoSlide);
+        // Swipe support
+        let startX = 0;
+        let isSwiping = false;
+        testimonViewport.addEventListener('touchstart', (e) => {
+          if (!e.touches || !e.touches[0]) return;
+          startX = e.touches[0].clientX;
+          isSwiping = true;
+          stopTestimonAutoSlide();
+        }, { passive: true });
+        testimonViewport.addEventListener('touchmove', (e) => {
+          // no-op, passive to keep scroll smooth
+        }, { passive: true });
+        testimonViewport.addEventListener('touchend', (e) => {
+          if (!isSwiping) return;
+          const endX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : startX;
+          const delta = endX - startX;
+          const threshold = 50; // pixels
+          if (delta > threshold) {
+            goToTestimon(currentTestimonIndex - 1);
+          } else if (delta < -threshold) {
+            goToTestimon(currentTestimonIndex + 1);
+          }
+          isSwiping = false;
+          startTestimonAutoSlide();
+        });
+        // Initialize
+        updateTestimonPosition();
+        startTestimonAutoSlide();
+      }
+
+      // Impact metrics count-up on each view
+      const metricNumbers = document.querySelectorAll('.metric-number');
+      if (metricNumbers.length > 0) {
+        const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+        const animateValue = (el, to, duration = 1500) => {
+          if (el.dataset.animating === 'true') return; // prevent overlap
+          el.dataset.animating = 'true';
+          const start = 0;
+          const startTime = performance.now();
+          const format = (v) => Math.floor(v).toLocaleString();
+          const step = (now) => {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const eased = easeOut(progress);
+            el.textContent = format(start + (to - start) * eased);
+            if (progress < 1) requestAnimationFrame(step);
+            else el.dataset.animating = 'false';
+          };
+          el.textContent = '0';
+          requestAnimationFrame(step);
+        };
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            const el = entry.target;
+            const target = parseInt(el.getAttribute('data-target') || '0', 10);
+            if (entry.isIntersecting) {
+              animateValue(el, target);
+            }
+          });
+        }, { threshold: 0.6 });
+        metricNumbers.forEach((el) => io.observe(el));
+      }
+
+      // Back to top (mobile)
+      const backToTopBtn = document.getElementById('backToTop');
+      const toggleBackToTop = () => {
+        if (!backToTopBtn) return;
+        if (window.scrollY > 300) backToTopBtn.classList.add('visible');
+        else backToTopBtn.classList.remove('visible');
+      };
+      window.addEventListener('scroll', toggleBackToTop);
+      backToTopBtn?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
-     });
-     // Back to top (mobile)
-     const backToTopBtn = document.getElementById('backToTop');
-     const toggleBackToTop = () => {
-       if (!backToTopBtn) return;
-       if (window.scrollY > 300) backToTopBtn.classList.add('visible');
-       else backToTopBtn.classList.remove('visible');
-     };
-     window.addEventListener('scroll', toggleBackToTop);
-     backToTopBtn?.addEventListener('click', () => {
-       window.scrollTo({ top: 0, behavior: 'smooth' });
-     });
-     toggleBackToTop();
+      toggleBackToTop();
      </script>
 </body>
 </html>
