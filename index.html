@@ -314,34 +314,39 @@
         <!-- Testimonies -->
         <section id="testimonies" class="testimonies">
           <h1>Testimony</h1>
-          <div id="testimony-slider">
-            <div id="testimony-slides">
-              <div class="testimon-card">
-                <p>
-                  “TechHer changed my life. I learned computer skills, online
-                  safety, and how to design. I want to study Computer Science
-                  now.”
-                </p>
-                <small>— Amina, Student, GGSS Makera</small>
-              </div>
-              <div class="testimon-card">
-                <p>
-                  “Bleed with Pride helped me understand menstrual hygiene and
-                  how to care for myself confidently.”
-                </p>
-                <small>— Zainab, Participant</small>
-              </div>
-              <div class="testimon-card">
-                <p>
-                  “The maternal health project made me feel supported and
-                  prepared for childbirth.”
-                </p>
-                <small>— Maryam, Expectant Mother, Ungwan Muazu PHC</small>
-              </div>
-            </div>
-            <button class="testimon-arrow prev" aria-label="Previous testimonial">&#10094;</button>
-            <button class="testimon-arrow next" aria-label="Next testimonial">&#10095;</button>
+          <div id="slider">
+      <div id="slides">
+        <div id="slide-card">
+          <div class="slide-details">
+            <p>
+              “TechHer changed my life. I learned computer skills, online
+              safety, and how to design. I want to study Computer Science now.”
+            </p>
+            <small>— Amina, Student, GGSS Makera</small>
           </div>
+        </div>
+        <div id="slide-card">
+          <div class="slide-details">
+            <p>
+              “Bleed with Pride helped me understand menstrual hygiene and how
+              to care for myself confidently.”
+            </p>
+            <small>— Zainab, Participant</small>
+          </div>
+        </div>
+        <div id="slide-card">
+          <div class="slide-details">
+            <p>
+              “The maternal health project made me feel supported and prepared
+              for childbirth.”
+            </p>
+            <small>— Maryam, Expectant Mother, Ungwan Muazu PHC</small>
+          </div>
+        </div>
+      </div>
+        <button id="next">&#10095;</button>
+        <button id="prev">&#10094;</button>
+    </div>
         </section>
         <!-- Call to action -->
         <section class="cta">
@@ -428,117 +433,41 @@
       }
 
       // Testimonials slider
-      const testimonViewport = document.querySelector(".testimon-viewport");
-      const testimonTrack = document.querySelector(".testimon-track");
-      const testimonCards = document.querySelectorAll(".testimon-card");
-      const prevBtn = document.querySelector(".testimon-arrow.prev");
-      const nextBtn = document.querySelector(".testimon-arrow.next");
-      const dotsContainer = document.querySelector(".testimon-dots");
-      let currentTestimonIndex = 0;
-      let testimonIntervalId;
-
-      function updateTestimonPosition() {
-        const offset = -currentTestimonIndex * testimonViewport.clientWidth;
-        testimonTrack.style.transform = `translateX(${offset}px)`;
-      }
-
-      function updateActiveDot() {
-        if (!dotsContainer) return;
-        const dots = dotsContainer.querySelectorAll(".testimon-dot");
-        dots.forEach((d, i) => {
-          if (i === currentTestimonIndex) d.classList.add("active");
-          else d.classList.remove("active");
-        });
-      }
-
-      function goToTestimon(index) {
-        currentTestimonIndex =
-          (index + testimonCards.length) % testimonCards.length;
-        updateTestimonPosition();
-        updateActiveDot();
-      }
-
-      function startTestimonAutoSlide() {
-        stopTestimonAutoSlide();
-        testimonIntervalId = setInterval(() => {
-          goToTestimon(currentTestimonIndex + 1);
-        }, 4000);
-      }
-
-      function stopTestimonAutoSlide() {
-        if (testimonIntervalId) clearInterval(testimonIntervalId);
-      }
-
-      if (testimonViewport && testimonTrack && testimonCards.length > 0) {
-        // Create dots
-        if (dotsContainer) {
-          dotsContainer.innerHTML = "";
-          for (let i = 0; i < testimonCards.length; i++) {
-            const dot = document.createElement("button");
-            dot.className = "testimon-dot" + (i === 0 ? " active" : "");
-            dot.setAttribute("aria-label", `Go to testimonial ${i + 1}`);
-            dot.addEventListener("click", () => {
-              goToTestimon(i);
-            });
-            dotsContainer.appendChild(dot);
-          }
+      let currentSlide = 0;
+      let autoSlide;
+      let slideCont = document.getElementById("slider")
+      function showSlide(index) {
+        let slides = document.querySelectorAll("#slide-card");
+        if (index >= slides.length) {
+          currentSlide = 0;
+        } else if (index < 0) {
+          currentSlide = slides.lenght - 1;
+        } else {
+          currentSlide = index;
         }
-        // Arrows
-        if (prevBtn)
-          prevBtn.addEventListener("click", () =>
-            goToTestimon(currentTestimonIndex - 1)
-          );
-        if (nextBtn)
-          nextBtn.addEventListener("click", () =>
-            goToTestimon(currentTestimonIndex + 1)
-          );
-
-        // Handle resize to keep slide width accurate
-        window.addEventListener("resize", updateTestimonPosition);
-        // Pause on hover for accessibility/UX
-        testimonViewport.addEventListener("mouseenter", stopTestimonAutoSlide);
-        testimonViewport.addEventListener("mouseleave", startTestimonAutoSlide);
-        // Swipe support
-        let startX = 0;
-        let isSwiping = false;
-        testimonViewport.addEventListener(
-          "touchstart",
-          (e) => {
-            if (!e.touches || !e.touches[0]) return;
-            startX = e.touches[0].clientX;
-            isSwiping = true;
-            stopTestimonAutoSlide();
-          },
-          { passive: true }
-        );
-        testimonViewport.addEventListener(
-          "touchmove",
-          (e) => {
-            // no-op, passive to keep scroll smooth
-          },
-          { passive: true }
-        );
-        testimonViewport.addEventListener("touchend", (e) => {
-          if (!isSwiping) return;
-          const endX =
-            e.changedTouches && e.changedTouches[0]
-              ? e.changedTouches[0].clientX
-              : startX;
-          const delta = endX - startX;
-          const threshold = 50; // pixels
-          if (delta > threshold) {
-            goToTestimon(currentTestimonIndex - 1);
-          } else if (delta < -threshold) {
-            goToTestimon(currentTestimonIndex + 1);
-          }
-          isSwiping = false;
-          startTestimonAutoSlide();
-        });
-        // Initialize
-        updateTestimonPosition();
-        startTestimonAutoSlide();
+        let offset = -currentSlide * 100;
+        document.querySelector(
+          "#slides"
+        ).style.transform = `translateX(${offset}%)`;
       }
-
+      function moveSlide(direction) {
+        showSlide(currentSlide + direction);
+      }
+      function startAutoSlide (){
+        autoSlide = setInterval(() => moveSlide(1),2000)
+      }
+      function stopAutoSlide (){
+        clearInterval(autoSlide)
+      }
+      document.addEventListener("DOMContentLoaded", () =>{
+        showSlide(currentSlide)
+        startAutoSlide()
+        document.addEventListener("next").addEventListener("click", ()=> moveSlide(1))
+        document.getElementById("prev").addEventListener("click", ()=> moveSlide(-1))
+        const slider = document.getElementById("slider")
+        slider.addEventListener("mouseenter", stopAutoSlide)
+        slider.addEventListener("mouseleave", startAutoSlide)
+      })
       // Impact metrics count-up on each view
       const metricNumbers = document.querySelectorAll(".metric-number");
       if (metricNumbers.length > 0) {
