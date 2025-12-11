@@ -384,7 +384,7 @@ section {
   background-color: #f7e0f6;
 }
 .our_impacts > div {
-  width: 50%;
+  width: 80%;
   border-radius: 40px;
   text-align: center;
   color: white;
@@ -403,7 +403,7 @@ section {
 .our_impacts > .mental {
   background: linear-gradient(60deg, #c62828, #ee6a6a);
 }
-.our_impacts > .bleed {
+.our_impacts > .bleed-act {
   background: linear-gradient(60deg, #8f0000, #ff1919);
 }
 .our_impacts > .medical {
@@ -513,6 +513,9 @@ section {
   width: 100%;
   margin: 20px auto;
 }
+.gallery-2024{
+  grid-template-columns: repeat(2, 1fr);
+}
 .video-gallery {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -530,6 +533,8 @@ section {
 }
 .video-gallery > .column {
   grid-area: column;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 .digital {
   grid-template-columns: repeat(2, 1fr);
@@ -969,6 +974,9 @@ footer {
   }
   .techheramb {
     flex-direction: column;
+  }
+  .video-gallery > .column{
+    grid-template-columns: 1fr;
   }
   .patners {
     display: flex;
