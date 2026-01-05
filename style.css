@@ -513,7 +513,7 @@ section {
   width: 100%;
   margin: 20px auto;
 }
-.gallery-2024{
+.gallery-2024 {
   grid-template-columns: repeat(2, 1fr);
 }
 .video-gallery {
@@ -975,7 +975,7 @@ footer {
   .techheramb {
     flex-direction: column;
   }
-  .video-gallery > .column{
+  .video-gallery > .column {
     grid-template-columns: 1fr;
   }
   .patners {
@@ -1036,4 +1036,25 @@ footer {
     width: 90%;
     padding: 20px;
   }
+}
+
+/* Read More functionality */
+.more-text {
+  display: none;
+}
+
+.read-more-btn {
+  display: inline-block;
+  color: #fff;
+  background: #058ed9;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.read-more-btn:hover {
+  background: #046bb3;
 }

@@ -99,3 +99,22 @@ backToTopBtn?.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 toggleBackToTop();
+
+// Read More functionality
+document.addEventListener("DOMContentLoaded", () => {
+  const readMoreBtn = document.querySelector(".read-more-btn");
+  const moreText = document.querySelector(".more-text");
+
+  if (readMoreBtn && moreText) {
+    readMoreBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (moreText.style.display === "none" || moreText.style.display === "") {
+        moreText.style.display = "inline";
+        readMoreBtn.textContent = "Read Less";
+      } else {
+        moreText.style.display = "none";
+        readMoreBtn.textContent = "Read More";
+      }
+    });
+  }
+});
