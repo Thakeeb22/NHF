@@ -118,3 +118,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+document.querySelectorAll(".team-box").forEach((card) => {
+  const btn = card.querySelector(".read-more-text")
+  const more = card.querySelector(".more-text")
+  if (btn && more){
+    btn.addEventListener("click", (e) => {
+      e.preventDefault()
+      if (more.style.display === "inline"){
+        more.style.display = "none"
+        btn.textContent = "Read More"
+      }else {
+        more.style.display = "inline"
+        btn.textContent = "Read Less"
+      }
+    })
+  }
+})

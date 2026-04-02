@@ -436,7 +436,9 @@ section {
   text-decoration: none;
   border-bottom: none;
   padding-bottom: 0;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
 }
 .our_impacts a::after {
   content: "→";
@@ -497,14 +499,58 @@ section {
   background: linear-gradient(45deg, #008f18, #71ff19);
   box-shadow: 2px 2px 6px 0px black;
 }
-.main-team {
-  grid-area: main;
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-  grid-template-areas: "teams teams teams teams teams";
-  gap: 40px;
+/* Teams Section */
+.teams {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  padding: 50px 20px;
 }
 
+.team-box {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  flex: 1 1 300px; /* flexible width, min 300px */
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.team-box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.team-img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+}
+
+.team-box h3 {
+  font-size: 1.2rem;
+  margin: 15px 0 5px;
+  color: #0288d1;
+}
+
+.team-box small {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.team-box p {
+  padding: 0 15px 20px;
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.5;
+}
 .gallery {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -574,29 +620,7 @@ section {
   border-radius: 10px;
   object-fit: cover;
 }
-.teams {
-  grid-area: teams;
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 0;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
-.teams > div {
-  width: 20%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 0;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 0px 20px 1px grey;
-}
-.team-img {
-  width: 90%;
-  margin-bottom: 10px;
-}
+
 /* partners */
 .partners {
   grid-area: partners;
@@ -914,10 +938,7 @@ footer {
     grid-template-columns: auto;
     width: 100%;
   }
-  .main-team {
-    grid-template-columns: auto;
-    grid-template-areas: "teams";
-  }
+
   .navbar {
     backdrop-filter: none;
     height: 56px;
@@ -1024,6 +1045,11 @@ footer {
     width: 140px;
   }
 }
+@media (max-width: 1200px) {
+  .team-box {
+    flex: 1 1 45%;
+  }
+}
 @media (max-width: 768px) {
   .about,
   .mission,
@@ -1037,12 +1063,23 @@ footer {
     padding: 20px;
   }
 }
-
+.team-box {
+  flex: 1 1 100%;
+}
 /* Read More functionality */
 .more-text {
   display: none;
 }
-
+.read-more-text {
+  display: inline-block;
+  color: #0288d1;
+  padding: 1px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  cursor: pointer;
+}
 .read-more-btn {
   display: inline-block;
   color: #fff;
