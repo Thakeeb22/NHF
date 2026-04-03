@@ -64,8 +64,8 @@ header {
   box-sizing: border-box;
 }
 .logo {
-  max-width: 80px;
-  min-width: 40px;
+  max-width: 100px;
+  min-width: 60px;
   cursor: pointer;
   margin-top: 20px;
 }
@@ -1023,7 +1023,7 @@ footer {
     padding: 3px 15px;
   }
   .logo {
-    width: 50px;
+    width: 80px;
   }
   .impact_btn,
   input[type="submit"] {
