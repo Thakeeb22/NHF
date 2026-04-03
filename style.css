@@ -64,9 +64,8 @@ header {
   box-sizing: border-box;
 }
 .logo {
-  max-width: 100px;
-  min-width: 60px;
-  cursor: pointer;
+  height: clamp(50px, 8vw, 90px);
+  width: auto;
   margin-top: 20px;
 }
 .navbar-container .navbar-menu {
@@ -975,10 +974,11 @@ footer {
     transform: translateY(-8px) rotate(-45deg);
   }
   /* Ensure logo scales to fit the shorter header */
-  .logo {
-    max-height: 36px;
+  /* .logo {
+    height: 60px;
+    max-height: none;
     width: auto;
-  }
+  } */
   .thematics_cont {
     grid-template-columns: auto;
     width: 100%;
@@ -1022,9 +1022,9 @@ footer {
     font-size: 20px;
     padding: 3px 15px;
   }
-  .logo {
+  /* .logo {
     width: 80px;
-  }
+  } */
   .impact_btn,
   input[type="submit"] {
     padding: 10px 15px;
